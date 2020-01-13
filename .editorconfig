@@ -1,0 +1,30 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = false
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
+insert_final_newline = true
+
+[{*.yml,*.yaml,*.tf,*.tfvars,*.hcl}]
+indent_style = space
+indent_size = 2
+continuation_indent_size = 2
+insert_final_newline = true
+
+[*.java]
+indent_style = space
+indent_size = 4
+continuation_indent_size = 4
+insert_final_newline = true
