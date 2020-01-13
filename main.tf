@@ -80,13 +80,13 @@ resource "aws_cloudfront_distribution" "edith_care" {
 
   default_cache_behavior {
     allowed_methods = [
-      "DELETE",
-      "GET",
       "HEAD",
-      "OPTIONS",
-      "PATCH",
+      "DELETE",
       "POST",
+      "GET",
+      "OPTIONS",
       "PUT",
+      "PATCH",
     ]
     cached_methods = [
       "GET",
