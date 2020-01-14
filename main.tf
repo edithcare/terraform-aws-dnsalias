@@ -5,6 +5,7 @@ locals {
   website_domain                = "s3-website.${var.aws_region}.amazonaws.com"
   website_endpoint              = "${local.bucket_name}.${local.website_domain}"
   distribution_origin_id        = "S3-Website-${local.website_endpoint}"
+  index_html_path               = "${path.module}/src/index.html"
 }
 
 resource "aws_s3_bucket" "bucket_index" {
@@ -16,6 +17,7 @@ resource "aws_s3_bucket" "bucket_index" {
   tags             = {}
   website_domain   = local.website_domain
   website_endpoint = local.website_endpoint
+  force_destroy    = true
 
   versioning {
     enabled    = false
@@ -25,6 +27,15 @@ resource "aws_s3_bucket" "bucket_index" {
   website {
     index_document = "index.html"
   }
+}
+
+resource "aws_s3_bucket_object" "index" {
+  count        = var.redirection_url == "" ? 1 : 0
+  bucket       = aws_s3_bucket.bucket_index[0].bucket
+  key          = aws_s3_bucket.bucket_index[0].website[0].index_document
+  source       = local.index_html_path
+  content_type = "text/html"
+  etag         = filemd5(local.index_html_path)
 }
 
 resource "aws_s3_bucket" "bucket_redirect" {
@@ -49,7 +60,7 @@ resource "aws_s3_bucket" "bucket_redirect" {
 
 resource "aws_s3_bucket_policy" "edith_care" {
   count  = var.enable_public_access ? 1 : 0
-  bucket = local.bucket_name
+  bucket = aws_s3_bucket.bucket_index[0].bucket
   policy = jsonencode(
     {
       Statement = [
@@ -68,7 +79,7 @@ resource "aws_s3_bucket_policy" "edith_care" {
 
 resource "aws_cloudfront_distribution" "edith_care" {
   aliases = [
-    local.bucket_name
+    var.redirection_url == "" ? aws_s3_bucket.bucket_index[0].bucket : aws_s3_bucket.bucket_redirect[0].bucket
   ]
   enabled             = true
   http_version        = "http2"
@@ -147,7 +158,7 @@ resource "aws_cloudfront_distribution" "edith_care" {
 }
 
 resource "aws_route53_record" "edith_care" {
-  name    = local.bucket_name
+  name    = var.redirection_url == "" ? aws_s3_bucket.bucket_index[0].bucket : aws_s3_bucket.bucket_redirect[0].bucket
   type    = "A"
   zone_id = var.aws_zone_id
 

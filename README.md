@@ -1,6 +1,8 @@
 # Terraform DNS Alias
 
-This terraform module represents DNS alias that can be used for automatic redirection.
+This terraform module represents a DNS alias that can be used for automatic redirection. Without an explicit redirection url,
+the target bucket will be configured for web hosting, containing an index.html with automatic redirection via JS 
+to the project homepage.
 
 ## Requirements
 
