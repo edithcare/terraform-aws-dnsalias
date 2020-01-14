@@ -19,4 +19,4 @@ Please see the [variables.tf](variables.tf) file
 
 ## Outputs
 
-Please see the [outputs.tf](outputs.tf) file
+Please see the [output.tf](output.tf) file
