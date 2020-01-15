@@ -1,6 +1,5 @@
 locals {
   aws_hosted_cloudfront_zone_id = "Z2FDTNDATAQYW2"
-  google_gsuite_hosted_cname    = "ghs.googlehosted.com."
   bucket_name                   = var.alias_name == "" ? var.zone_name : "${var.alias_name}.${var.zone_name}"
   website_domain                = "s3-website.${var.aws_region}.amazonaws.com"
   website_endpoint              = "${local.bucket_name}.${local.website_domain}"

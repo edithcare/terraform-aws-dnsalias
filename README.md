@@ -13,6 +13,11 @@ to the project homepage.
 * [Free Terraform Enterprise Account](https://app.terraform.io/account/new) for accessing and locking the cluster environment state
 * Let the Terraform Enterprise [admin](https://github.com/drobakowski) add you to the organisation `edithcare`
 
+## TODO
+
+The [src/index.html](src/index.html) contains the absolute URL of the project. This should be replaced by a template.
+
+
 ## Inputs
 
 Please see the [variables.tf](variables.tf) file

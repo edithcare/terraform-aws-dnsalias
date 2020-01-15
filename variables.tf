@@ -32,18 +32,18 @@ variable "aws_region" {
 variable "redirection_url" {
   type        = string
   default     = ""
-  description = "The target URL for redirection."
+  description = "The target URL for redirection. Leave empty for static website hosting configuration."
 }
 
 variable "enable_public_access" {
   type        = bool
   default     = false
-  description = "Enables public access on S3 bucket."
+  description = "Enables public access on S3 bucket. Only effective when using static website hosting."
 }
 
 variable "aws_cert_arn" {
   type        = string
-  description = "AWS ARN for the certificate."
+  description = "AWS ARN for the certificate. Must be configured in us-east-1."
 }
 
 variable "viewer_protocol_policy" {
