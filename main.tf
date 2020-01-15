@@ -16,7 +16,6 @@ resource "aws_s3_bucket" "bucket_index" {
   tags             = {}
   website_domain   = local.website_domain
   website_endpoint = local.website_endpoint
-  force_destroy    = true
 
   versioning {
     enabled    = false
@@ -57,7 +56,7 @@ resource "aws_s3_bucket" "bucket_redirect" {
   }
 }
 
-resource "aws_s3_bucket_policy" "edith_care" {
+resource "aws_s3_bucket_policy" "bucket_index_policy" {
   count  = var.enable_public_access ? 1 : 0
   bucket = aws_s3_bucket.bucket_index[0].bucket
   policy = jsonencode(
@@ -67,7 +66,7 @@ resource "aws_s3_bucket_policy" "edith_care" {
           Action    = "s3:GetObject"
           Effect    = "Allow"
           Principal = "*"
-          Resource  = "arn:aws:s3:::${local.bucket_name}/*"
+          Resource  = "arn:aws:s3:::${aws_s3_bucket.bucket_index[0].bucket}/*"
           Sid       = "PublicReadGetObject"
         },
       ]
@@ -76,7 +75,7 @@ resource "aws_s3_bucket_policy" "edith_care" {
   )
 }
 
-resource "aws_cloudfront_distribution" "edith_care" {
+resource "aws_cloudfront_distribution" "distribution" {
   aliases = [
     var.redirection_url == "" ? aws_s3_bucket.bucket_index[0].bucket : aws_s3_bucket.bucket_redirect[0].bucket
   ]
@@ -156,14 +155,14 @@ resource "aws_cloudfront_distribution" "edith_care" {
   }
 }
 
-resource "aws_route53_record" "edith_care" {
+resource "aws_route53_record" "record" {
   name    = var.redirection_url == "" ? aws_s3_bucket.bucket_index[0].bucket : aws_s3_bucket.bucket_redirect[0].bucket
   type    = "A"
   zone_id = var.aws_zone_id
 
   alias {
     evaluate_target_health = false
-    name                   = aws_cloudfront_distribution.edith_care.domain_name
+    name                   = aws_cloudfront_distribution.distribution.domain_name
     zone_id                = local.aws_hosted_cloudfront_zone_id
   }
 }

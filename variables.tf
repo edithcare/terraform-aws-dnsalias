@@ -13,9 +13,9 @@ variable "aws_zone_id" {
   description = "The AWS zone id."
 }
 
-variable "aws_essential_account_id" {
+variable "aws_account_id" {
   type        = string
-  description = "The AWS account id of the essential account."
+  description = "The AWS account id."
 }
 
 variable "aws_s3_bucket_hosted_zone_id" {
