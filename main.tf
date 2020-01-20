@@ -85,7 +85,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   price_class         = "PriceClass_All"
   retain_on_delete    = false
   tags                = {}
-  wait_for_deployment = true
+  wait_for_deployment = false
 
   default_cache_behavior {
     allowed_methods = [
