@@ -1,5 +1,7 @@
 # Terraform DNS Alias
 
+![Terraform GitHub Actions](https://github.com/edithcare/terraform-aws-dnsalias/workflows/Terraform%20GitHub%20Actions/badge.svg)
+
 This terraform module represents a DNS alias that can be used for automatic redirection. Without an explicit redirection url,
 the target bucket will be configured for web hosting, containing an index.html with automatic redirection via JS 
 to the project homepage.
