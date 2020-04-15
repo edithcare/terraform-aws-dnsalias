@@ -1,6 +1,11 @@
 name: 'Terraform GitHub Actions'
 on:
-  - pull_request
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 jobs:
   terraform:
     name: 'Terraform'
@@ -14,6 +19,7 @@ jobs:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: 'fmt'
         env:
+          AWS_DEFAULT_REGION: eu-central-1
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Terraform Init'
         uses: hashicorp/terraform-github-actions@master
@@ -21,6 +27,7 @@ jobs:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: 'init'
         env:
+          AWS_DEFAULT_REGION: eu-central-1
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
@@ -28,6 +35,7 @@ jobs:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: 'validate'
         env:
+          AWS_DEFAULT_REGION: eu-central-1
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: 'Terraform Plan'
       #   uses: hashicorp/terraform-github-actions@master
