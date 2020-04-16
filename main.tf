@@ -102,8 +102,8 @@ resource "aws_cloudfront_distribution" "distribution" {
       "HEAD",
     ]
     compress               = false
-    default_ttl            = 86400
-    max_ttl                = 31536000
+    default_ttl            = var.cloudfront_default_ttl
+    max_ttl                = var.cloudfront_max_ttl
     min_ttl                = 0
     smooth_streaming       = false
     target_origin_id       = local.distribution_origin_id

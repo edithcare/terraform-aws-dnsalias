@@ -51,3 +51,15 @@ variable "viewer_protocol_policy" {
   default     = "redirect-to-https"
   description = "Viewer protocol policy of the AWS CloudFront distribution default cache behaviour."
 }
+
+variable "cloudfront_max_ttl" {
+  type        = number
+  default     = 31536000
+  description = "The maximum ttl of an Object delivered via Cloudfront"
+}
+
+variable "cloudfront_default_ttl" {
+  type        = number
+  default     = 86400
+  description = "The default ttl of an Object delivered via Cloudfront"
+}
