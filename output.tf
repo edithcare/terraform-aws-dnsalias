@@ -4,6 +4,6 @@ output record_name {
 }
 
 output bucket_arn {
-  value       = aws_s3_bucket.bucket_index.arn
+  value       = aws_s3_bucket.bucket_index[0].arn
   description = "The arn of the s3-bucket."
 }
