@@ -35,6 +35,12 @@ variable "redirection_url" {
   description = "The target URL for redirection. Leave empty for static website hosting configuration."
 }
 
+variable "create_index" {
+  type        = bool
+  default     = true
+  description = "the index.html file is created when this variable is true. Also the index.html file will be overwritten each run, if this variable is true"
+}
+
 variable "enable_public_access" {
   type        = bool
   default     = false
