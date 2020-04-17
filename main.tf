@@ -33,7 +33,6 @@ resource "aws_s3_bucket_object" "index" {
   key          = aws_s3_bucket.bucket_index[0].website[0].index_document
   source       = local.index_html_path
   content_type = "text/html"
-  etag         = filemd5(local.index_html_path)
 }
 
 resource "aws_s3_bucket" "bucket_redirect" {
