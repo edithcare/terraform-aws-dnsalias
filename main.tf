@@ -28,12 +28,11 @@ resource "aws_s3_bucket" "bucket_index" {
 }
 
 resource "aws_s3_bucket_object" "index" {
-  count        = var.redirection_url == "" ? 1 : 0
+  count        = var.redirection_url == "" && var.create_index ? 1 : 0
   bucket       = aws_s3_bucket.bucket_index[0].bucket
   key          = aws_s3_bucket.bucket_index[0].website[0].index_document
   source       = local.index_html_path
   content_type = "text/html"
-  etag         = filemd5(local.index_html_path)
 }
 
 resource "aws_s3_bucket" "bucket_redirect" {
@@ -102,8 +101,8 @@ resource "aws_cloudfront_distribution" "distribution" {
       "HEAD",
     ]
     compress               = false
-    default_ttl            = 86400
-    max_ttl                = 31536000
+    default_ttl            = var.cloudfront_default_ttl
+    max_ttl                = var.cloudfront_max_ttl
     min_ttl                = 0
     smooth_streaming       = false
     target_origin_id       = local.distribution_origin_id

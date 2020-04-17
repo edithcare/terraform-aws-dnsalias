@@ -35,6 +35,12 @@ variable "redirection_url" {
   description = "The target URL for redirection. Leave empty for static website hosting configuration."
 }
 
+variable "create_index" {
+  type        = bool
+  default     = true
+  description = "the index.html file is created when this variable is true. Also the index.html file will be overwritten each run, if this variable is true"
+}
+
 variable "enable_public_access" {
   type        = bool
   default     = false
@@ -50,4 +56,16 @@ variable "viewer_protocol_policy" {
   type        = string
   default     = "redirect-to-https"
   description = "Viewer protocol policy of the AWS CloudFront distribution default cache behaviour."
+}
+
+variable "cloudfront_max_ttl" {
+  type        = number
+  default     = 31536000
+  description = "The maximum ttl of an Object delivered via Cloudfront"
+}
+
+variable "cloudfront_default_ttl" {
+  type        = number
+  default     = 86400
+  description = "The default ttl of an Object delivered via Cloudfront"
 }
