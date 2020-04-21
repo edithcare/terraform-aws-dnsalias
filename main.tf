@@ -33,6 +33,10 @@ resource "aws_s3_bucket_object" "index" {
   key          = aws_s3_bucket.bucket_index[0].website[0].index_document
   source       = local.index_html_path
   content_type = "text/html"
+
+  metadata = {
+    "version-id" = "null"
+  }
 }
 
 resource "aws_s3_bucket" "bucket_redirect" {
@@ -75,9 +79,9 @@ resource "aws_s3_bucket_policy" "bucket_index_policy" {
 }
 
 resource "aws_cloudfront_distribution" "distribution" {
-  aliases = [
+  aliases = concat([
     var.redirection_url == "" ? aws_s3_bucket.bucket_index[0].bucket : aws_s3_bucket.bucket_redirect[0].bucket
-  ]
+  ], var.alternative_aliases)
   enabled             = true
   http_version        = "http2"
   is_ipv6_enabled     = true

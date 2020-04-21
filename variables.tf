@@ -3,6 +3,12 @@ variable "alias_name" {
   description = "The name of the alias."
 }
 
+variable "alternative_aliases" {
+  type        = list(string)
+  default     = []
+  description = "The name of the alterantive aliases."
+}
+
 variable "zone_name" {
   type        = string
   description = "The name of the DNS zone"
