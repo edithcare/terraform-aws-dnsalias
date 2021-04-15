@@ -11,7 +11,6 @@ resource "aws_s3_bucket" "bucket_index" {
   count            = var.redirection_url == "" ? 1 : 0
   bucket           = local.bucket_name
   hosted_zone_id   = var.aws_s3_bucket_hosted_zone_id
-  region           = var.aws_region
   request_payer    = "BucketOwner"
   tags             = {}
   website_domain   = local.website_domain
@@ -43,7 +42,6 @@ resource "aws_s3_bucket" "bucket_redirect" {
   count            = var.redirection_url == "" ? 0 : 1
   bucket           = local.bucket_name
   hosted_zone_id   = var.aws_s3_bucket_hosted_zone_id
-  region           = var.aws_region
   request_payer    = "BucketOwner"
   tags             = {}
   website_domain   = local.website_domain
@@ -169,4 +167,3 @@ resource "aws_route53_record" "record" {
     zone_id                = local.aws_hosted_cloudfront_zone_id
   }
 }
-
